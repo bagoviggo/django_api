@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -24,6 +25,18 @@ SECRET_KEY = 'django-insecure-=h#*dt6vkb8ju=i23xm7gv-p^6xb1_cu((45h^@!l4uw#z08%^
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+
+# Grab environment variables
+
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+SECRET_KEY = os.getenv('SECRET_KEY')
+DATABASE_PASSWORD = os.getenv('DB_PASSWORD')
+USER = os.getenv('DB_USER')
+DATABASE_NAME = os.getenv('DB_NAME')
 
 ALLOWED_HOSTS = []
 
@@ -75,8 +88,12 @@ WSGI_APPLICATION = 'CoreRoot.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': DATABASE_NAME,
+        'USER': USER,
+        'PASSWORD': DATABASE_PASSWORD,
+        'HOST': 'localhost',
+        'PORT': '5342',
     }
 }
 
